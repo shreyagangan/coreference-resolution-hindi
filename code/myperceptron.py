@@ -1,11 +1,13 @@
 import numpy
-positive=open("positive.txt","r")
+positive=open("Output/positive.txt","r")
 p=positive.read()
 pline=p.split("\n")
+pline=filter(None,pline)
 
-negative=open("negative.txt","r")
+negative=open("Output/negative.txt","r")
 n=negative.read()
 nline=n.split("\n")
+nline=filter(None,nline)
 
 #initialize
 W=[0,0,0] 	#<0,0,.....,0,0>
@@ -25,9 +27,8 @@ for i in range(0,MaxIter):
 		wx=numpy.multiply(W,x)
 		a=sum(wx)+b
 		ya=y*a
-		if(ya<=0):
+		if(ya<0):
 			yx=numpy.multiply(x,y)
-
 			W=numpy.add(W,yx)
 			b+=y
 			ycx=numpy.multiply(yx,c)
@@ -61,3 +62,8 @@ b=numpy.subtract(b,betan)
 
 print(W)
 print(b)
+
+parameters=open("Output/parameters.txt","w+")
+parameters.write(str(W).replace("[","").replace("]",""))
+parameters.write("\n")
+parameters.write(str(b))
