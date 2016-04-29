@@ -1,3 +1,3 @@
-# nlp-project
+# coreference-resolution-hindi
 
-Averaged Perceptron Learning Algorithm
+Algorithm Used: Averaged Perceptron Learning Algorithm
