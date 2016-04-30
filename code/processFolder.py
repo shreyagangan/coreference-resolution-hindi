@@ -10,6 +10,7 @@ negativetrain=open("Output/negative.txt","w+")
 
 folder_name="Inputs/"
 for filename in os.listdir(folder_name):
+    print(filename)
     M={} #mentions (key),(class,NP,HN)
     E = defaultdict(list)
     complete_path=folder_name+filename;
@@ -19,9 +20,9 @@ for filename in os.listdir(folder_name):
     count=0
 
     for line in lines:
-        print(line)
+        #print(line)
         #get mentions:
-        print("mentions")
+        #print("mentions")
         beg=0
         end=len(line)
         while(beg<end):
@@ -30,53 +31,53 @@ for filename in os.listdir(folder_name):
             start=line.find("[",beg)+1
             ending=line.find("]",beg)
             mention1=line[start:ending]
-            print(mention1)
+            #print(mention1)
             info=mention1[mention1.find("<")+1:mention1.find(">")].split(",")
             eclasslist=map(int,info[0]);
             eclass=eclasslist[0]
-            print(eclass)
+            #print(eclass)
             E[eclass].append({'m':count,'mtype':info[1]})
             hn=mention1[mention1.find("(")+1:mention1.find(")")]
-            print(hn)
+            #print(hn)
             np=mention1[mention1.find(">")+1:end]
             np=np.replace("(","")
             np=np.replace(")","")
-            print(np)
+            #print(np)
             M[count]={'np':np,'hn':hn,'mtype':info[1]}
             beg=line.find("]",beg)+1
             count+=1
-        print("\n")
+        #print("\n")
 
-    print(E)
-    #print(M)
+    #print(E)
+    ##print(M)
 
 
 
     positive=set()
     negative=set()
     for eclass in E:
-        #print(E[eclass])
+        ##print(E[eclass])
         for i in range(0,len(E[eclass])-1):
             m1=E[eclass][i]['m']
             m2=E[eclass][i+1]['m']
-            #print(E[eclass][i]['m'])
-            #print(E[eclass][i+1]['m'])
+            ##print(E[eclass][i]['m'])
+            ##print(E[eclass][i+1]['m'])
             positive.add((m1,m2))
 
-    print("negative")
+    #print("negative")
 
     for i in range(1,len(E)+1):
         for j in range(i+1,len(E)+1):
-            print(E[i])
-            print(E[j])
+            #print(E[i])
+            #print(E[j])
             for e1 in E[i]:
                 for e2 in E[j]:
                     m1=e1['m']
                     m2=e2['m']
-                    #print(m1)
-                    #print(m2)
+                    ##print(m1)
+                    ##print(m2)
                     negative.add((m1,m2))
-    print(negative)        
+    #print(negative)        
 
 
     #attributes
@@ -89,7 +90,7 @@ for filename in os.listdir(folder_name):
 
 
 
-    print(positive)
+    #print(positive)
     for (m1,m2) in positive:
         mtype=0 #1-T (-1)-F
         hmatch=0  #1-T (-1)-F
@@ -102,10 +103,10 @@ for filename in os.listdir(folder_name):
             mtype=1
         else:
             mtype=-1
-        #print(mtype)
-        print("head")
-        print(hn1)
-        print(hn2)
+        ##print(mtype)
+        #print("head")
+        #print(hn1)
+        #print(hn2)
         if(hn1==hn2):
             hmatch=1
         else:
@@ -114,11 +115,11 @@ for filename in os.listdir(folder_name):
             submatch=1
         else:
             submatch=-1
-        print(submatch)
+        #print(submatch)
         positivetrain.write(str(mtype)+" "+str(hmatch)+" "+str(submatch)+" "+"\n")
 
     #negativetrain=open("negative.txt","w+")
-    print(negative)
+    #print(negative)
     for (m1,m2) in negative:
         mtype=0 #1-T (-1)-F
         hmatch=0  #1-T (-1)-F
@@ -131,10 +132,10 @@ for filename in os.listdir(folder_name):
             mtype=1
         else:
             mtype=-1
-        #print(mtype)
-        print("head")
-        print(hn1)
-        print(hn2)
+        ##print(mtype)
+        #print("head")
+        #print(hn1)
+        #print(hn2)
         if(hn1==hn2):
             hmatch=1
         else:
@@ -143,6 +144,6 @@ for filename in os.listdir(folder_name):
             submatch=1
         else:
             submatch=-1
-        print(submatch)
+        #print(submatch)
         negativetrain.write(str(mtype)+" "+str(hmatch)+" "+str(submatch)+" "+"\n")
 
